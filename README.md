@@ -1,199 +1,197 @@
+# react-native-picker
 
-#  `@react-native-community/picker`
+[![npm version](https://img.shields.io/npm/v/react-native-picker.svg?style=flat-square)](https://www.npmjs.com/package/react-native-picker) <a href="https://david-dm.org/beefe/react-native-picker"><img src="https://david-dm.org/beefe/react-native-picker.svg?style=flat-square" alt="dependency status"></a>   
 
-[![CircleCI Status](https://img.shields.io/circleci/project/github/react-native-community/react-native-picker/master.svg)](https://circleci.com/gh/react-native-community/workflows/react-native-picker/tree/master) ![Supports Android and iOS](https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg) ![MIT License](https://img.shields.io/npm/l/@react-native-community/picker.svg)
+![ui3](./doc/ui3.jpg)
+![ui4](./doc/ui4.jpg)
 
-<img src="./screenshots/picker-android.png" width="150">
-<img src="./screenshots/picker-ios.png" width="150">
-<img src="./screenshots/pickerios-ios.png" width="150">
+### Documentation
 
-## Getting started
+#### Params
 
-`$ npm install @react-native-community/picker --save`
+|Key | Type | Default| Support | Description |
+| --- | --- | ---- | ------ | ----------- |
+|isLoop                | Boolean | false              |     Android  |   |
+|pickerTextEllipsisLen | number  | 6                  |     Android  |   |
+|pickerConfirmBtnText  | string  | confirm            | iOS/Android  |   |
+|pickerCancelBtnText   | string  | cancel             | iOS/Android  |   |
+|pickerTitleText       | string  | pls select         | iOS/Android  |   |
+|pickerConfirmBtnColor | array   | [1, 186, 245, 1]   | iOS/Android  |   |
+|pickerCancelBtnColor  | array   | [1, 186, 245, 1]   | iOS/Android  |   |
+|pickerTitleColor      | array   | [20, 20, 20, 1]    | iOS/Android  |   |
+|pickerToolBarBg       | array   | [232, 232, 232, 1] | iOS/Android  |   |
+|pickerBg              | array   | [196, 199, 206, 1] | iOS/Android  |   |
+|pickerToolBarFontSize | number  | 16                 | iOS/Android  |   |
+|wheelFlex             | array   | [1, 1, 1]          | iOS/Android  |   |
+|pickerFontSize        | number  | 16                 | iOS/Android  |   |
+|pickerFontColor       | array   | [31, 31, 31, 1]    | iOS/Android  |   |
+|pickerFontFamily      | string  |                    | iOS/Android  |   |
+|pickerRowHeight       | number  | 24                 | iOS          |   |
+|pickerData            | array   |                    | iOS/Android  |   |
+|selectedValue         | array   |                    | iOS/Android  |   |
+|onPickerConfirm       | function|                    | iOS/Android  |   |
+|onPickerCancel        | function|                    | iOS/Android  |   |
+|onPickerSelect        | function|                    | iOS/Android  |   |
 
-### Mostly automatic installation
+#### Methods
 
-`$ react-native link @react-native-community/picker`
-
-### Manual installation
-
-
-#### iOS
-
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ ` @react-native-community/picker` and add `RNCPicker.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNCPicker.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
-
-#### Android
-
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactnativecommunity.picker.RNCPickerPackage;` to the imports at the top of the file
-  - Add `new RNCPickerPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
-  	```
-  	include ': @react-native-community/picker'
-  	project(': @react-native-community/picker').projectDir = new File(rootProject.projectDir, 	'../node_modules/ @react-native-community/picker/android')
-  	```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      compile project(': @react-native-community/picker')
-  	```
+|Key | Support | Description |
+| --- | ---- | ----------- |
+|init         | iOS/Android |init and pass parameters to picker      |
+|toggle       | iOS/Android |show or hide picker                     |
+|show         | iOS/Android |show picker                             |
+|hide         | iOS/Android |hide picker                             |
+|select       | iOS/Android |select a row                            |
+|isPickerShow | iOS/Android |get status of picker, return a boolean  |
 
 
-## Usage
-### Picker
+### Usage
 
-Renders the native picker component on iOS and Android. Example:
+#### Step 1 - install
 
 ```javascript
-<Picker
-  selectedValue={this.state.language}
-  style={{height: 50, width: 100}}
-  onValueChange={(itemValue, itemIndex) =>
-    this.setState({language: itemValue})
-  }>
-  <Picker.Item label="Java" value="java" />
-  <Picker.Item label="JavaScript" value="js" />
-</Picker>
+	npm install react-native-picker --save
 ```
 
-### Props
+#### Step 2 - link
 
-* [Inherited `View` props...](https://facebook.github.io/react-native/docs/view#props)
+```
+	react-native link
+```
 
-- [`onValueChange`](#onvaluechange)
-- [`selectedValue`](#selectedvalue)
-- [`style`](#style)
-- [`testID`](#testid)
-- [`enabled`](#enabled)
-- [`mode`](#mode)
-- [`prompt`](#prompt)
-- [`itemStyle`](#itemstyle)
+#### Step 3 - import and use in project
 
----
+```javascript
+import Picker from 'react-native-picker';
+let data = [];
+for(var i=0;i<100;i++){
+    data.push(i);
+}
 
-# Reference
+Picker.init({
+    pickerData: data,
+    selectedValue: [59],
+    onPickerConfirm: data => {
+        console.log(data);
+    },
+    onPickerCancel: data => {
+        console.log(data);
+    },
+    onPickerSelect: data => {
+        console.log(data);
+    }
+});
+Picker.show();
+	
+```
 
-## Props
+### Integration With Existing Apps (`iOS`)
+The `Podfile` will like below:
+``` ruby
+platform :ios, '8.0'
+target 'YourTarget' do
+    pod 'React', :path => '../YOUR_REACT_NATIVE_PROJECT/node_modules/react-native', :subspecs => [
+    'Core',
+    ...
+    ]
+    pod 'Picker', :path => '../YOUR_REACT_NATIVE_PROJECT/node_modules/react-native-picker'
+end
+```
+After you have updated the `Podfile` of the existing app, you can install `react-native-picker` like below:
+``` bash
+$ pod install
+```
 
-### `onValueChange`
+### Notice
 
-Callback for when an item is selected. This is called with the following parameters:
+#### support two modes:
 
-* `itemValue`: the `value` prop of the item that was selected
-* `itemPosition`: the index of the selected item in this picker
+<b>1. parallel:</b> such as time picker, wheels have no connection with each other
 
-| Type     | Required |
-| -------- | -------- |
-| function | No       |
+<b>2. cascade:</b> such as date picker, address picker .etc, when front wheel changed, the behind wheels will all be reset
 
----
+#### parallel:
 
-### `selectedValue`
+- single wheel:
 
-Value matching value of one of the items. Can be a string or an integer.
+```javascript
+pickerData = [1,2,3,4];
+selectedValue = 3;
+```
 
-| Type | Required |
-| ---- | -------- |
-| any  | No       |
+- two or more wheel:
 
----
+```javascript
+pickerData = [
+    [1,2,3,4],
+    [5,6,7,8],
+    ...
+];
+selectedValue = [1, 5];
+```
 
-### `style`
+#### cascade:
 
-| Type            | Required |
-| --------------- | -------- |
-| pickerStyleType | No       |
+- two wheel
 
----
+```javascript
+pickerData = [
+    {
+        a: [1, 2, 3, 4]
+    },
+    {
+        b: [5, 6, 7, 8]
+    },
+    ...
+];
+selectedValue = ['a', 2];
+```
 
-### `testID`
+- three wheel
 
-Used to locate this view in end-to-end tests.
+```javascript
+pickerData = [
+    {
+        a: [
+            {
+                a1: [1, 2, 3, 4]
+            },
+            {
+                a2: [5, 6, 7, 8]
+            },
+            {
+                a3: [9, 10, 11, 12]
+            }
+        ]
+    },
+    {
+        b: [
+            {
+                b1: [11, 22, 33, 44]
+            },
+            {
+                b2: [55, 66, 77, 88]
+            },
+            {
+                b3: [99, 1010, 1111, 1212]
+            }
+        ]
+    },
+    {
+        c: [
+            {
+                c1: ['a', 'b', 'c']
+            },
+            {
+                c2: ['aa', 'bb', 'cc']
+            },
+            {
+                c3: ['aaa', 'bbb', 'ccc']
+            }
+        ]
+    },
+    ...
+]
+```
 
-| Type   | Required |
-| ------ | -------- |
-| string | No       |
-
----
-
-### `enabled`
-
-If set to false, the picker will be disabled, i.e. the user will not be able to make a selection.
-
-| Type | Required | Platform |
-| ---- | -------- | -------- |
-| bool | No       | Android  |
-
----
-
-### `mode`
-
-On Android, specifies how to display the selection items when the user taps on the picker:
-
-* 'dialog': Show a modal dialog. This is the default.
-* 'dropdown': Shows a dropdown anchored to the picker view
-
-| Type                       | Required | Platform |
-| -------------------------- | -------- | -------- |
-| enum('dialog', 'dropdown') | No       | Android  |
-
----
-
-### `prompt`
-
-Prompt string for this picker, used on Android in dialog mode as the title of the dialog.
-
-| Type   | Required | Platform |
-| ------ | -------- | -------- |
-| string | No       | Android  |
-
----
-
-### `itemStyle`
-
-Style to apply to each of the item labels.
-
-| Type                               | Required | Platform |
-| ---------------------------------- | -------- | -------- |
-| [text styles](https://facebook.github.io/react-native/docs/text-style-props) | No       | iOS      |
-
-### PickerIOS
-### Props
-
-* [Inherited `View` props...](https://facebook.github.io/react-native/docs/view#props)
-
-- [`itemStyle`](#itemstyle)
-- [`onValueChange`](#onvaluechange)
-- [`selectedValue`](#selectedvalue)
-
----
-
-# Reference
-
-## Props
-
-### `itemStyle`
-
-| Type                               | Required |
-| ---------------------------------- | -------- |
-| [text styles](https://facebook.github.io/react-native/docs/text-style-props) | No       |
-
----
-
-### `onValueChange`
-
-| Type     | Required |
-| -------- | -------- |
-| function | No       |
-
----
-
-### `selectedValue`
-
-| Type | Required |
-| ---- | -------- |
-| any  | No       |
-
-  
+### For pure javascript version -> [v3.0.5](https://github.com/beefe/react-native-picker/tree/pure-javascript-version)  
